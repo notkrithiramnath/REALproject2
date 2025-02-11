@@ -168,8 +168,6 @@ void compute_vertical_cost_matrix(const Matrix* energy, Matrix *cost) {
 //           Note: When implementing the algorithm, compute the seam starting at the
 //           bottom row and work your way up.
 vector<int> find_minimal_vertical_seam(const Matrix* cost) {
-  assert(false);
-  /*
   vector<int> seam;
   int width = Matrix_width(cost);
   int height = Matrix_height(cost);
@@ -178,20 +176,20 @@ vector<int> find_minimal_vertical_seam(const Matrix* cost) {
   seam.push_back(min);
   //start from the bottom row
   for(int r = height-1; r > 0; r--){
-    for(int c = 0; c < width; c++){
-      if(c > 0 && c < width-1){
-        min = Matrix_column_of_min_value_in_row(cost, r-1, c-1, c+2);
-      }else if(c == 0){
-        min = Matrix_column_of_min_value_in_row(cost, r-1, c, c+2);
-      }else if(c == width - 1){
-        min = Matrix_column_of_min_value_in_row(cost, r-1, c-1, c+1);
+    
+    if(min > 0 && min < width-1){
+      min = Matrix_column_of_min_value_in_row(cost, r-1, min-1, min+2);
+    }else if(min == 0){
+      min = Matrix_column_of_min_value_in_row(cost, r-1, min, min+2);
+    }else if(min == width - 1){
+      min = Matrix_column_of_min_value_in_row(cost, r-1, min-1, min+1);
 
 
-      }
-      seam.push_back(min);
     }
+    seam.insert(seam.begin(), min);
+    
   }
-  return seam;*/
+  return seam;
 }
 //make processing_public_tests.exe
 // ./processing_public_tests.exe
@@ -209,9 +207,9 @@ vector<int> find_minimal_vertical_seam(const Matrix* cost) {
 //           then do an assignment at the end to copy it back into the
 //           original image.
 void remove_vertical_seam(Image *img, const vector<int> &seam) {//in progress!!!
-  assert(false);
   
-  /*int width = Image_width(img);
+  
+  int width = Image_width(img);
   int height = Image_height(img);
   Image temp;
   Image_init(&temp, height, width-1);//since the new image will have a smaller width (-1)
@@ -225,7 +223,7 @@ void remove_vertical_seam(Image *img, const vector<int> &seam) {//in progress!!!
       }
     }
   }
-  *img = temp;//copy over*/
+  *img = temp;
 }
 
 

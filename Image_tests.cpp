@@ -64,6 +64,32 @@ TEST(test_image_fill){
   ASSERT_EQUAL(Image_get_pixel(&img, 0, 0).g, color.g);
   ASSERT_EQUAL(Image_get_pixel(&img, 0, 0).b, color.b);
 
+  //check that pixel at (2,2) is the color
+  ASSERT_EQUAL(Image_get_pixel(&img, 2, 2).r, color.r);
+  ASSERT_EQUAL(Image_get_pixel(&img, 2, 2).g, color.g);
+  ASSERT_EQUAL(Image_get_pixel(&img, 2, 2).b, color.b);
+
+//larger test
+  Pixel color = {200, 150, 78};//random color
+  Image_init(&img, 20, 30);
+  Image_fill(&img, color);
+
+  // Check that the pixel at (0, 0) is color
+  ASSERT_EQUAL(Image_get_pixel(&img, 0, 0).r, color.r);
+  ASSERT_EQUAL(Image_get_pixel(&img, 0, 0).g, color.g);
+  ASSERT_EQUAL(Image_get_pixel(&img, 0, 0).b, color.b);
+
+  //check that pixel at the middle is the color
+  ASSERT_EQUAL(Image_get_pixel(&img, 5, 10).r, color.r);
+  ASSERT_EQUAL(Image_get_pixel(&img, 10, 5).g, color.g);
+  ASSERT_EQUAL(Image_get_pixel(&img, 15, 19).b, color.b);
+
+  //check that pixel at the end is the color
+  ASSERT_EQUAL(Image_get_pixel(&img, 19, 29).r, color.r);
+  ASSERT_EQUAL(Image_get_pixel(&img, 19, 29).g, color.g);
+  ASSERT_EQUAL(Image_get_pixel(&img, 19, 29).b, color.b);
+
+
 
 }
 

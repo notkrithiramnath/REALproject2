@@ -86,24 +86,27 @@ static int squared_difference(Pixel p1, Pixel p2) {
 //           image is computed and written into it.
 //           See the project spec for details on computing the energy matrix.
 void compute_energy_matrix(const Image* img, Matrix* energy) {
-  Matrix_init(energy, img -> width, img -> height);
+  int height = Image_height(img);
+  int width = Image_width(img);
+  Matrix_init(energy, width, height);
   int energy_val = 0;
-  for(int r = 0; r < img-> height; r++){
-    for(int c = 0; c < img-> width; c++){
-      Pixel N = {0, 0, 0}; //initialize the pixels
-      Pixel S = {0, 0, 0};
-      Pixel W = {0, 0, 0};
-      Pixel E = {0, 0, 0};
+  for(int r = 0; r < height; r++){
+    for(int c = 0; c < width; c++){
+      Pixel temp = Image_get_pixel(img, r, c);
+      Pixel N = temp; //initialize the pixels
+      Pixel S = temp;
+      Pixel W = temp;
+      Pixel E = temp;
       if(r > 0){
         N = Image_get_pixel(img, r-1, c);
       }
-      if(r < energy->height - 1){
+      if(r < height - 1){
         S = Image_get_pixel(img, r+1, c);
       }
       if(c > 0){
         W = Image_get_pixel(img, r, c-1);
       }
-      if(c < energy->width - 1){//if the column is not at the edge
+      if(c < width - 1){//if the column is not at the edge
         E = Image_get_pixel(img, r, c+1);
       }
       energy_val = squared_difference(N, S) + squared_difference(W, E);
@@ -165,6 +168,8 @@ void compute_vertical_cost_matrix(const Matrix* energy, Matrix *cost) {
 //           Note: When implementing the algorithm, compute the seam starting at the
 //           bottom row and work your way up.
 vector<int> find_minimal_vertical_seam(const Matrix* cost) {
+  assert(false);
+  /*
   vector<int> seam;
   int width = Matrix_width(cost);
   int height = Matrix_height(cost);
@@ -186,9 +191,10 @@ vector<int> find_minimal_vertical_seam(const Matrix* cost) {
       seam.push_back(min);
     }
   }
-  return seam;
+  return seam;*/
 }
 //make processing_public_tests.exe
+// ./processing_public_tests.exe
 //
 // REQUIRES: img points to a valid Image with width >= 2
 //           seam.size() == Image_height(img)
@@ -203,7 +209,9 @@ vector<int> find_minimal_vertical_seam(const Matrix* cost) {
 //           then do an assignment at the end to copy it back into the
 //           original image.
 void remove_vertical_seam(Image *img, const vector<int> &seam) {//in progress!!!
-  int width = Image_width(img);
+  assert(false);
+  
+  /*int width = Image_width(img);
   int height = Image_height(img);
   Image temp;
   Image_init(&temp, height, width-1);//since the new image will have a smaller width (-1)
@@ -217,7 +225,7 @@ void remove_vertical_seam(Image *img, const vector<int> &seam) {//in progress!!!
       }
     }
   }
-  *img = temp;//copy over
+  *img = temp;//copy over*/
 }
 
 

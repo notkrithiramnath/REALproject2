@@ -90,9 +90,10 @@ void compute_energy_matrix(const Image* img, Matrix* energy) {
   int width = Image_width(img);
   Matrix_init(energy, width, height);
   int energy_val = 0;
-  bool border = false;
-  for(int r = 0; r < height; r++){
-    for(int c = 0; c < width; c++){
+  
+  for(int r = 1; r < height-1; r++){
+    for(int c = 1; c < width-1; c++){
+      
       Pixel temp = Image_get_pixel(img, r, c);
       Pixel N = temp; //initialize the pixels
       Pixel S = temp;
@@ -100,24 +101,24 @@ void compute_energy_matrix(const Image* img, Matrix* energy) {
       Pixel E = temp;
       if(r > 0){
         N = Image_get_pixel(img, r-1, c);
-        border = true;
+       
       }
       if(r < height - 1){
         S = Image_get_pixel(img, r+1, c);
-        border = true;
+      
       }
       if(c > 0){
         W = Image_get_pixel(img, r, c-1);
-        border = true;
+    
       }
       if(c < width - 1){//if the column is not at the edge
         E = Image_get_pixel(img, r, c+1);
-        border = true;
+     
       }
-      if(border){
-        energy_val = squared_difference(N, S) + squared_difference(W, E);
-        *Matrix_at(energy, r, c) = energy_val;
-      }
+      
+      energy_val = squared_difference(N, S) + squared_difference(W, E);
+      *Matrix_at(energy, r, c) = energy_val;
+      
       
     }
   }

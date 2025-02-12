@@ -8,31 +8,46 @@ using namespace std;
 // The desired width is greater than 0 and less than or equal to the original width of the input image.
 // The desired height is greater than 0 and less than or equal to the original height of the input image.
 int main(int argc, char *argv[]) {
-bool no_error = true;
-Image *image;
-std::ifstream in_file(argv[0]);
-if (!in_file.is_open()) {
-    cout << "Error: Could not open input file " << *argv[0] << endl;
-    return 1;
-}
 
-std::ifstream out_file(argv[1]);
-if (!out_file.is_open()) {
+//   struct Image {
+//   int width;
+//   int height;
+//   Matrix red_channel;
+//   Matrix green_channel;
+//   Matrix blue_channel;
+// };
+
+bool no_error = true;
+vector<int> data = {20,0};
+Matrix filler = {5,4,data};
+Image photo = {5,3,filler,filler,filler};
+Image *image = &photo; 
+std::ifstream in_file(argv[1]);
+Image_init(image, in_file);
+if (!in_file.is_open()) {
     cout << "Error: Could not open input file " << *argv[1] << endl;
     return 1;
 }
 
-Image_init(image, in_file);
-if(argc!=4||argc!=5){
+std::ofstream out_file(argv[2]);
+if (!out_file.is_open()) {
+    cout << "Error: Could not open output file " << *argv[2] << endl;
+    return 1;
+}
+
+if(argc!=4&&argc!=5){
   no_error = false;
 }
-int argv2 = *argv[2]-0;
-if(argv2 < 0 || argv2 > Image_width(image)){
+int argv3 = *argv[3];
+if(argv3 <= 0 || argv3 > Image_width(image)){
   no_error = false;
 }
-int argv3 = *argv[3]-0;
-if(argv3 < 0 || argv3 > Image_width(image)){
-  no_error = false;
+
+if(argc==5){
+  int argv4 = *argv[4];
+  if(argv4 <= 0 || argv4 > Image_width(image)){
+    no_error = false;
+  }
 }
   
 if(no_error==false){

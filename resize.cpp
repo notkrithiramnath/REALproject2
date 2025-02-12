@@ -9,52 +9,48 @@ using namespace std;
 // The desired height is greater than 0 and less than or equal to the original height of the input image.
 int main(int argc, char *argv[]) {
 
-//   struct Image {
-//   int width;
-//   int height;
-//   Matrix red_channel;
-//   Matrix green_channel;
-//   Matrix blue_channel;
-// };
+if(argc!=4 && argc!=5){
+  cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n"
+     << "WIDTH and HEIGHT must be less than or equal to original" << endl;
+  return 1;
+}
 
-bool no_error = true;
-vector<int> data = {20,0};
+vector<int> data(20);
 Matrix filler = {5,4,data};
 Image photo = {5,3,filler,filler,filler};
 Image *image = &photo; 
+
+
 std::ifstream in_file(argv[1]);
-Image_init(image, in_file);
+
 if (!in_file.is_open()) {
-    cout << "Error: Could not open input file " << *argv[1] << endl;
+    cout << "Error: Could not open input file " << argv[1] << endl;
     return 1;
 }
 
 std::ofstream out_file(argv[2]);
 if (!out_file.is_open()) {
-    cout << "Error: Could not open output file " << *argv[2] << endl;
+    cout << "Error: Could not open output file " << argv[2] << endl;
     return 1;
 }
-
-if(argc!=4&&argc!=5){
-  no_error = false;
-}
-int argv3 = *argv[3];
+Image_init(image, in_file);
+int argv3 = stoi(argv[3]);
 if(argv3 <= 0 || argv3 > Image_width(image)){
-  no_error = false;
-}
-
-if(argc==5){
-  int argv4 = *argv[4];
-  if(argv4 <= 0 || argv4 > Image_width(image)){
-    no_error = false;
-  }
-}
-  
-if(no_error==false){
   cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n"
      << "WIDTH and HEIGHT must be less than or equal to original" << endl;
   return 1;
 }
+
+if(argc==5){
+  int argv4 = stoi(argv[4]);
+  if(argv4 <= 0 || argv4 > Image_height(image)){
+    cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n"
+     << "WIDTH and HEIGHT must be less than or equal to original" << endl;
+  return 1;
+  }
+}
+  
+
 return 0;
 }
 //Check command line arguments (using argc and argv)

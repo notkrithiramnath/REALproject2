@@ -248,7 +248,7 @@ void remove_vertical_seam(Image *img, const vector<int> &seam) {//in progress!!!
 //           the right size. You can use .data() on a vector to get
 //           the underlying array.
 void seam_carve_width(Image *img, int newWidth) {
-  while(img->width > newWidth){
+  while(Image_width(img) > newWidth){
     //energy matrix
   Matrix energy;
   compute_energy_matrix(img, &energy);

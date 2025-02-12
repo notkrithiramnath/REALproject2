@@ -4,9 +4,14 @@ using namespace std;
 #include <fstream>
 
 
-// There are 4 or 5 arguments, including the executable name itself (i.e. argv[0]).
-// The desired width is greater than 0 and less than or equal to the original width of the input image.
-// The desired height is greater than 0 and less than or equal to the original height of the input image.
+/* There are 4 or 5 arguments, including 
+the executable name itself (i.e. argv[0]).*/
+/*The desired width is greater than 0 and 
+less than or equal to the original width 
+of the input image.*/
+/* The desired height is greater than 0 
+and less than or equal to the original height 
+of the input image.*/
 int main(int argc, char *argv[]) {
 
 if(argc!=4 && argc!=5){

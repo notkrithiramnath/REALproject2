@@ -113,7 +113,7 @@ TEST(test_Matrix_max_negative) {
   ASSERT_EQUAL(Matrix_max(&mat), -1);
   
 }
-TEST(test_Matrix_max_same) {
+TEST(test_Matrix_max_same){
   Matrix mat;
   const int width = 5;
   const int height = 5;
@@ -157,9 +157,30 @@ TEST(test_Matrix_min_value_in_row) {
   Matrix_init(&mat, width, height);
   Matrix_fill(&mat, value);
   *Matrix_at(&mat, 0, 0) = 0;//set the first element to 0
+ASSERT_EQUAL(Matrix_min_value_in_row(&mat, 0, 0, width), 0);
+  //check if the min value is 0 in the first row
+
+  /*Matrix_min_value_in_row() - The column_end parameter 
+  in this function should be treated as an *exclusive* upper
+  bound. However, this bug treats the upper bound as inclusive. 
+  You'll need to add a test where this distinction would 
+  change the minimum value found.*/
+
+  Matrix anothermat;
+  const int wi = 5;
+  const int hi = 5;
+  const int val = 30;
+  //fill the matrix with the value
+  Matrix_init(&anothermat, wi, hi);
+  Matrix_fill(&anothermat, val);
+  //const int* Matrix_at(const Matrix* mat, int row, int column)
+  //int Matrix_min_value_in_row(const Matrix* mat, int row, int column_start, int column_end)
+  *Matrix_at(&anothermat, 0, 0) = 1;
+  *Matrix_at(&anothermat, 0, 4) = 0;//set the first element to 0
+ASSERT_EQUAL(Matrix_min_value_in_row(&anothermat, 0, 0, 4), 1);
+
   
-  
-  ASSERT_EQUAL(Matrix_min_value_in_row(&mat, 0, 0, width), 0);//check if the min value is 0 in the first row
+
   
 }
 TEST_MAIN() // Do NOT put a semicolon here

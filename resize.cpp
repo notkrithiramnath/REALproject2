@@ -2,7 +2,7 @@
 #include "jpeg.hpp"
 using namespace std;
 #include <fstream>
-
+#include "processing.hpp"
 
 /* There are 4 or 5 arguments, including 
 the executable name itself (i.e. argv[0]).*/
@@ -20,11 +20,7 @@ if(argc!=4 && argc!=5){
   return 1;
 }
 
-vector<int> data(20);
-Matrix filler = {5,4,data};
-Image photo = {5,3,filler,filler,filler};
-Image *image = &photo; 
-
+Image *image = new Image;
 
 std::ifstream in_file(argv[1]);
 
@@ -53,9 +49,12 @@ if(argc==5){
      << "WIDTH and HEIGHT must be less than or equal to original" << endl;
   return 1;
   }
+  seam_carve(image, argv3, argv4);
 }
-  
-
+else{
+  seam_carve_width(image, argv3);
+}
+Image_print(image, out_file);
 return 0;
 }
 //Check command line arguments (using argc and argv)
